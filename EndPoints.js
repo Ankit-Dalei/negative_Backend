@@ -15,8 +15,8 @@ dotenv.config();
 const port =process.env.PORT||4000;
 
 
-const url = 'mongodb://localhost:27017/negative';
-// const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
+// const url = 'mongodb://localhost:27017/negative';
+const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
 // chn
 app.use(cors({
   origin: process.env.ORIGIN, // Allow only your frontend origin
@@ -25,12 +25,8 @@ app.use(cors({
 }));
 
 mongoose.connect(url)
-.then(async (client) => {
-  console.log('✅ Connected to MongoDB');
-})
-.catch((error) => {
-  console.error('❌ MongoDB connection error:', error);
-});
+  .then(() => console.log("✅ Connected to MongoDB Atlas"))
+  .catch(err => console.error("❌ MongoDB connection error:", err));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
