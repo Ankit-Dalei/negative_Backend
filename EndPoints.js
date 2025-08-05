@@ -1,6 +1,8 @@
 import express from "express";
-import { MongoClient } from 'mongodb';
+// import { MongoClient } from 'mongodb';
+import mongoose from "mongoose";
 import cors from 'cors'
+import dotenv from 'dotenv';
 import { CheckUserCredential } from "./src/BusinessLogics/Verify/userVerify.js";
 import { userStroe } from "./src/BusinessLogics/SendToDatabase/userStore.js";
 import { userEmailVerify } from "./src/BusinessLogics/EmailSender/userEmailVerify.js";
@@ -9,17 +11,20 @@ import { userIsVerifyPage } from "./src/BusinessLogics/Verify/userIsVerifyPage.j
 import { sendVerificationSuccessEmail } from "./src/BusinessLogics/EmailSender/userCreateSuccess.js";
 import { userFind } from "./src/BusinessLogics/FindFromDatabass/userFind.js";
 const app = express();
-const port = 4000;
+dotenv.config();
+const port =process.env.PORT||4000;
 
-const url = 'mongodb+srv://ankitdalei123:G4gKKRaMd3YjeIVf@negativedb.abs7crz.mongodb.net/?retryWrites=true&w=majority&appName=negativeDb/negative';
+
+const url = 'mongodb://localhost:27017/negative';
+// const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
 // chn
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow only your frontend origin
+  origin: process.env.ORIGIN, // Allow only your frontend origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
   credentials: true, // Allow cookies (if needed)
 }));
 
-MongoClient.connect(url)
+mongoose.connect(url)
 .then(async (client) => {
   console.log('✅ Connected to MongoDB');
 })

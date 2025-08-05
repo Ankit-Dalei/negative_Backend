@@ -1,9 +1,11 @@
 import { User } from "../../Models/userModel.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Use your actual secret from .env or config
-const JWT_SECRET = process.env.JWT_SECRET || "37649e6eb80c5edc5466961f678f0462175b2c378290f685ce2f0cde605bec91";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const userFind = async (req, res) => {
     const { username, password } = req.body;

@@ -1,18 +1,21 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const userEmailVerify = async (req,res,next) => {
   const user = req.createdUser;
   try {
-    const verificationLink = `http://localhost:4000/Verify_email_Page/${user._id}`;
+    const verificationLink = `${process.env.verificationLink}${user._id}`;
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'negative.verify.mail@gmail.com',
-        pass: 'fqab onep rfft inmn'
+        user: process.env.EMAIL,
+        pass: process.env.PASS
       }
+      
     });
-
     const mailOptions = {
       from: '"Negative" negative.verify.mail@gmail.com',
       to: user.email,

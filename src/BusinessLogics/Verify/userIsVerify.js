@@ -1,4 +1,7 @@
 import { User } from "../../Models/userModel.js";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const userIsVerify = async (req, res, next) => {
   try {
@@ -45,7 +48,7 @@ export const userIsVerify = async (req, res, next) => {
         </head>
         <body>
           <h1>✅ Your account has been verified!</h1>
-          <a href="http://localhost:5173/login">Back to Login</a>
+          <a href="${process.env.LOGIN}">Back to Login</a>
         </body>
       </html>
     `);

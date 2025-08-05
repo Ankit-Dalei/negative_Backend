@@ -1,6 +1,10 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 export const userIsVerifyPage = (req, res) => {
   const userId = req.params.id;
-  const verifyLink = `http://localhost:4000/Verify_email/${userId}`;
+  const verifyLink = `${process.env.verificationLinkVerify_email}${userId}`;
 
   res.send(`
     <!DOCTYPE html>

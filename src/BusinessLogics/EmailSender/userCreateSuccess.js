@@ -1,12 +1,15 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const sendVerificationSuccessEmail = async (req,res,next) => {
   const user = req.createdUser;
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'negative.verify.mail@gmail.com',
-      pass: 'fqab onep rfft inmn'
+      user: process.env.EMAIL,
+      pass: process.env.PASS
     }
   });
 
