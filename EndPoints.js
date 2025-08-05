@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // SignUp System
-app.post('/', (req,res)=>{
+app.get('/', (req,res)=>{
   res.send('connected')
 });
 app.post('/Signdata', CheckUserCredential,userStroe,userEmailVerify);
