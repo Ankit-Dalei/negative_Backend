@@ -2,6 +2,7 @@
   "name": "negative_backend",
   "version": "1.0.0",
   "main": "EndPoints.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +12,9 @@
   "description": "",
   "dependencies": {
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.0",
+    "nodemailer": "^7.0.5",
     "nodemon": "^3.1.10"
   }
 }
