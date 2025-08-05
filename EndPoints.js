@@ -27,11 +27,13 @@ mongose.connect(url)
   console.error('❌ MongoDB connection error:', error);
 });
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // SignUp System
+app.post('/', (req,res)=>{
+  res.send('connected')
+});
 app.post('/Signdata', CheckUserCredential,userStroe,userEmailVerify);
 app.get('/Verify_email_Page/:id',userIsVerifyPage);
 app.get('/Verify_email/:id',userIsVerify,sendVerificationSuccessEmail);
