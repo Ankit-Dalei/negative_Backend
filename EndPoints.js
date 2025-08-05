@@ -11,8 +11,8 @@ import { userFind } from "./src/BusinessLogics/FindFromDatabass/userFind.js";
 const app = express();
 const port = 4000;
 
-const url = 'mongodb://localhost:27017/negative';
-
+const url = 'mongodb+srv://ankitdalei123:G4gKKRaMd3YjeIVf@negativedb.abs7crz.mongodb.net/?retryWrites=true&w=majority&appName=negativeDb/negative';
+// chn
 app.use(cors({
   origin: 'http://localhost:5173', // Allow only your frontend origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
