@@ -1,5 +1,5 @@
 import express from "express";
-import mongose from "mongoose";
+import { MongoClient } from 'mongodb';
 import cors from 'cors'
 import { CheckUserCredential } from "./src/BusinessLogics/Verify/userVerify.js";
 import { userStroe } from "./src/BusinessLogics/SendToDatabase/userStore.js";
@@ -19,7 +19,7 @@ app.use(cors({
   credentials: true, // Allow cookies (if needed)
 }));
 
-mongose.connect(url)
+MongoClient.connect(url)
 .then(async (client) => {
   console.log('✅ Connected to MongoDB');
 })

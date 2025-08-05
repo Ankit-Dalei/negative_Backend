@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import { MongoClient } from 'mongodb';
 
-export const UserSchema = new mongoose.Schema({
+export const UserSchema = new MongoClient.Schema({
   firstName: {
     type: String,
     required: [true, 'First name is required'],
