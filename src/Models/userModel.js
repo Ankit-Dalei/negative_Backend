@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import mongoose from 'mongoose';
 import { UserSchema } from '../Schemas/userTables.js';
 
-export const User = MongoClient.model('User', UserSchema);
+export const User = mongoose.model('User', UserSchema);
