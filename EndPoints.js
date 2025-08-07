@@ -43,5 +43,6 @@ app.get('/Verify_email/:id',userIsVerify,sendVerificationSuccessEmail);
 app.post('/Logindata',userFind);
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  const url = `http://localhost:${port}/`;
+  console.log(`\x1b[34mServer running at: ${url}\x1b[0m`);
 });
