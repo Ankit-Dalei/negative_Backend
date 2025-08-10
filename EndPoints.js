@@ -10,13 +10,15 @@ import { userIsVerify } from "./src/BusinessLogics/Verify/userIsVerify.js";
 import { userIsVerifyPage } from "./src/BusinessLogics/Verify/userIsVerifyPage.js";
 import { sendVerificationSuccessEmail } from "./src/BusinessLogics/EmailSender/userCreateSuccess.js";
 import { userFind } from "./src/BusinessLogics/FindFromDatabass/userFind.js";
+import { verifyUser } from "./src/BusinessLogics/Verify/verifyUserForTab.js";
+import { getMainCloudTable } from "./src/BusinessLogics/FindFromDatabass/getMainCloudTable.js";
 const app = express();
 dotenv.config();
 const port =process.env.PORT||4000;
 
 
-// const url = 'mongodb://localhost:27017/negative';
-const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
+const url = 'mongodb://localhost:27017/negative';
+// const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
 // chn
 app.use(cors({
   origin: process.env.ORIGIN, // Allow only your frontend origin
@@ -41,6 +43,10 @@ app.get('/Verify_email/:id',userIsVerify,sendVerificationSuccessEmail);
 
 //Login System
 app.post('/Logindata',userFind);
+
+// Cloud System
+app.get('/getMainCloudTable',verifyUser,getMainCloudTable);
+app.post('/createFolder',verifyUser);
 
 app.listen(port, () => {
   const url = `http://localhost:${port}/`;
