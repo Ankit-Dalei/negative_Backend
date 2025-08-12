@@ -1,13 +1,13 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-import { driveStoreTables } from '../../Schemas/driveStoreTables.js';
 import { UserMainModel } from '../../Models/userCloudMainModel.js';
+import { CreateBucketCommand } from "@aws-sdk/client-s3";
+import { s3 } from '../Verify/createSSSConfig.js';
 
 dotenv.config();
 
-export const sendVerificationSuccessEmail = async (req, res, next) => {
-  const user = req.createdUser;
+export const sendVerificationSuccessEmail = async (id) => {
+  const user = id;
 
   // Nodemailer Transport
   const transporter = nodemailer.createTransport({
@@ -41,8 +41,12 @@ export const sendVerificationSuccessEmail = async (req, res, next) => {
   try {
     const collectionName = String(user._id);
     UserMainModel(collectionName)
+    const command = new CreateBucketCommand({ Bucket: collectionName });
+    const response = await s3.send(command);
+    // console.log(response.Location)
     await transporter.sendMail(mailOptions);
   } catch (err) {
-    res.send("Error creating user-specific collection:", err);
+    // res.send("Error creating user-specific collection:", err);
+    console.log("Error creating user-specific collection:", err)
   }
 };

@@ -17,8 +17,8 @@ dotenv.config();
 const port =process.env.PORT||4000;
 
 
-// const url = 'mongodb://localhost:27017/negative';
-const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
+const url = 'mongodb://localhost:27017/negative';
+// const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
 // chn
 app.use(cors({
   origin: process.env.ORIGIN, // Allow only your frontend origin
@@ -39,14 +39,17 @@ app.get('/', (req,res)=>{
 });
 app.post('/Signdata', CheckUserCredential,userStroe,userEmailVerify);
 app.get('/Verify_email_Page/:id',userIsVerifyPage);
-app.get('/Verify_email/:id',userIsVerify,sendVerificationSuccessEmail);
+// app.get('/Verify_email/:id',userIsVerify,sendVerificationSuccessEmail);
+app.get('/Verify_email/:id',userIsVerify);
 
 //Login System
 app.post('/Logindata',userFind);
 
 // Cloud System
-app.get('/getMainCloudTable',verifyUser,getMainCloudTable);
+app.get('/getMainCloudTable/:id',verifyUser,getMainCloudTable);
 app.post('/createFolder',verifyUser);
+app.post('/uploadFiles',verifyUser);
+app.post('/gitCofig',verifyUser);
 
 app.listen(port, () => {
   const url = `http://localhost:${port}/`;

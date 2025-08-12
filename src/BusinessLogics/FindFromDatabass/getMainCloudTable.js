@@ -13,7 +13,6 @@ export const getMainCloudTable = async (req, res) => {
         const collectionName = String(userId);
         
         const data = await UserMainModel(collectionName).find();
-        console.log(data)
         return res.status(200).json({
             message: "Data fetched successfully",
             data

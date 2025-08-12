@@ -1,5 +1,6 @@
 import { User } from "../../Models/userModel.js";
 import dotenv from 'dotenv';
+import { sendVerificationSuccessEmail } from "../EmailSender/userCreateSuccess.js";
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ export const userIsVerify = async (req, res, next) => {
     }
     const user = await User.findOne({ _id: id });
     req.createdUser = user;
-    next();
+    await sendVerificationSuccessEmail(user)
     return res.status(200).send(`
       <html>
         <head>
@@ -53,7 +54,6 @@ export const userIsVerify = async (req, res, next) => {
       </html>
     `);
   } catch (error) {
-    console.error("Verification error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };

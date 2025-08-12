@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 export const verifyUser = async (req, res, next) => {
     try {
         // Get token from Authorization header
-        const authHeader = req.body.userId;
+        const authHeader = req.params.id;
         if (!authHeader) {
             return res.status(401).json({ error: "Authorization token missing or invalid" });
         }
@@ -25,6 +25,7 @@ export const verifyUser = async (req, res, next) => {
         }
 
         const userId = decoded.userId;
+
 
         // Find user by ID
         const user = await User.findById(userId);
