@@ -6,7 +6,7 @@ import { driveStoreTables } from "../../Schemas/driveStoreTables.js";
 export const deleteFiles = async (req, res, next) => {
   try {
     const bucketName = req.user.toString();
-    const fileKeys = req.body; // expecting array of keys
+    const fileKeys = req.body;
 
     if (!Array.isArray(fileKeys) || fileKeys.length === 0) {
       return res.status(400).json({
@@ -29,7 +29,6 @@ export const deleteFiles = async (req, res, next) => {
       // Step 2: Delete matching docs in Mongo (where "key" field matches fileKeys)
       const fileModel = mongoose.model(bucketName, driveStoreTables);
       const mongoResult = await fileModel.deleteMany({ id: { $in: fileKeys } });
-      console.log(mongoResult)
       return res.status(200).json({
         success: true,
         message: "Files deleted successfully from S3 and Mongo",

@@ -15,6 +15,10 @@ import { getMainCloudTable } from "./src/BusinessLogics/FindFromDatabass/getMain
 import { uploadDataFile } from "./src/BusinessLogics/fileAndFolderUpload/fileUpload.js";
 import multer from "multer";
 import { deleteFiles } from "./src/BusinessLogics/fileAndFolderUpload/fileDelete.js";
+import { downloadFiles } from "./src/BusinessLogics/fileAndFolderUpload/fileDownload.js";
+import { ShareFiles } from "./src/BusinessLogics/fileAndFolderUpload/fileShare.js";
+import { downloadPage } from "./src/BusinessLogics/fileAndFolderUpload/downloadPage.js";
+import { downloadZipFiles } from "./src/BusinessLogics/fileAndFolderUpload/downloadZipFiles.js";
 
 const app = express();
 dotenv.config();
@@ -71,6 +75,13 @@ app.get('/getMainCloudTable/:id',verifyUser,getMainCloudTable);
 app.post('/uploadFiles/:id',verifyUser,upload.single('file'),uploadDataFile);
 // ✅ Delete file by id
 app.delete('/DeleteFile/:id', verifyUser, deleteFiles);
+// ✅ Download files
+app.post('/DownloadFile/:id', verifyUser, downloadFiles);
+// ✅ Share files
+app.post('/ShareFile/:id', verifyUser, ShareFiles);
+app.get('/ShareZipFile', downloadPage);
+app.get('/DownloadZipFile', downloadZipFiles);
+
 
 app.post('/gitCofig',verifyUser);
 
