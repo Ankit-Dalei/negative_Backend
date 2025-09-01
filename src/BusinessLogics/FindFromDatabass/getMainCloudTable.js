@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 
 export const getMainCloudTable = async (req, res) => {
     const userId  = req.user;
+    
     if (!userId) {
         return res.status(400).json({ error: "User ID is required" });
     }

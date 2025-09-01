@@ -12,6 +12,10 @@ import { sendVerificationSuccessEmail } from "./src/BusinessLogics/EmailSender/u
 import { userFind } from "./src/BusinessLogics/FindFromDatabass/userFind.js";
 import { verifyUser } from "./src/BusinessLogics/Verify/verifyUserForTab.js";
 import { getMainCloudTable } from "./src/BusinessLogics/FindFromDatabass/getMainCloudTable.js";
+import { uploadDataFile } from "./src/BusinessLogics/fileAndFolderUpload/fileUpload.js";
+import multer from "multer";
+import { deleteFiles } from "./src/BusinessLogics/fileAndFolderUpload/fileDelete.js";
+
 const app = express();
 dotenv.config();
 const port =process.env.PORT||4000;
@@ -19,7 +23,7 @@ const port =process.env.PORT||4000;
 
 const url = 'mongodb://localhost:27017/negative';
 // const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
-// chn
+
 app.use(cors({
   origin: process.env.ORIGIN, // Allow only your frontend origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
@@ -32,6 +36,22 @@ mongoose.connect(url)
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+
+// multer
+// Configure multer middleware
+// const upload = multer({
+//   storage: multer.memoryStorage(),
+//   limits: {
+//     fileSize: 10 * 1024 * 1024, // 10MB limit
+//   },
+// });
+
+const upload = multer({
+  storage: multer.memoryStorage(), // or diskStorage if needed
+});
+
 
 // SignUp System
 app.get('/', (req,res)=>{
@@ -47,8 +67,11 @@ app.post('/Logindata',userFind);
 
 // Cloud System
 app.get('/getMainCloudTable/:id',verifyUser,getMainCloudTable);
-app.post('/createFolder',verifyUser);
-app.post('/uploadFiles',verifyUser);
+// app.post('/createFolder',verifyUser);
+app.post('/uploadFiles/:id',verifyUser,upload.single('file'),uploadDataFile);
+// ✅ Delete file by id
+app.delete('/DeleteFile/:id', verifyUser, deleteFiles);
+
 app.post('/gitCofig',verifyUser);
 
 app.listen(port, () => {
