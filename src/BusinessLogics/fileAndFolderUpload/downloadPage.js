@@ -9,7 +9,7 @@ dotenv.config();
 
 export const downloadPage = (req, res) => {
   const token = req.query.token;
-  const fileKey = req.query.fileKey;
+  const fileKey = JSON.parse(req.query.str);
    // Decode token
    let decoded;
    try {
@@ -17,9 +17,10 @@ export const downloadPage = (req, res) => {
    } catch (err) {
        return res.status(401).json({ error: "Invalid or expired token" });
    }
-
   const userId = decoded.bucketName;
-  const obj = { fileKey, userId };
+  let str=JSON.stringify(fileKey)
+
+  const obj = { str, userId };
 
   const params = new URLSearchParams(obj).toString();
   let downloadLink=`${process.env.URL}/DownloadZipFile?${params}`

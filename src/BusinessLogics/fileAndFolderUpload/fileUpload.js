@@ -46,7 +46,6 @@ export const uploadDataFile = async (req, res, next) => {
     });
 
     let responses=await storeFile.save();
-console.log(responses)
     res.status(200).json({
       success: true,
       message: "File uploaded successfully",
