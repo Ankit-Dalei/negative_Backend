@@ -19,14 +19,15 @@ import { downloadFiles } from "./src/BusinessLogics/fileAndFolderUpload/fileDown
 import { ShareFiles } from "./src/BusinessLogics/fileAndFolderUpload/fileShare.js";
 import { downloadPage } from "./src/BusinessLogics/fileAndFolderUpload/downloadPage.js";
 import { downloadZipFiles } from "./src/BusinessLogics/fileAndFolderUpload/downloadZipFiles.js";
+import { uploadToFolder } from "./src/BusinessLogics/fileAndFolderUpload/folderUpload.js";
 
 const app = express();
 dotenv.config();
 const port =process.env.PORT||4000;
 
 
-// const url = 'mongodb://localhost:27017/negative';
-const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
+const url = 'mongodb://localhost:27017/negative';
+// const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
 
 app.use(cors({
   origin: process.env.ORIGIN, // Allow only your frontend origin
@@ -73,6 +74,7 @@ app.post('/Logindata',userFind);
 app.get('/getMainCloudTable/:id',verifyUser,getMainCloudTable);
 // app.post('/createFolder',verifyUser);
 app.post('/uploadFiles/:id',verifyUser,upload.single('file'),uploadDataFile);
+app.post('/uploadFolders/:id',verifyUser,upload.single('file'),uploadToFolder);
 // ✅ Delete file by id
 app.delete('/DeleteFile/:id', verifyUser, deleteFiles);
 // ✅ Download files

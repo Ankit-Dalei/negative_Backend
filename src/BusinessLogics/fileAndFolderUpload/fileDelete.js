@@ -40,7 +40,6 @@ export const deleteFiles = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error("❌ Error deleting files:", error);
     res.status(500).json({
       success: false,
       message: "File delete failed",
