@@ -26,8 +26,8 @@ dotenv.config();
 const port =process.env.PORT||4000;
 
 
-const url = 'mongodb://localhost:27017/negative';
-// const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
+// const url = 'mongodb://localhost:27017/negative';
+const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
 
 app.use(cors({
   origin: process.env.ORIGIN, // Allow only your frontend origin
