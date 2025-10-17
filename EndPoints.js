@@ -20,14 +20,17 @@ import { ShareFiles } from "./src/BusinessLogics/fileAndFolderUpload/fileShare.j
 import { downloadPage } from "./src/BusinessLogics/fileAndFolderUpload/downloadPage.js";
 import { downloadZipFiles } from "./src/BusinessLogics/fileAndFolderUpload/downloadZipFiles.js";
 import { uploadToFolder } from "./src/BusinessLogics/fileAndFolderUpload/folderUpload.js";
+import { getUserData } from "./src/BusinessLogics/FindFromDatabass/getUserData.js";
+import { createFolder } from "./src/BusinessLogics/fileAndFolderUpload/createFolder.js";
+import { cloneRepoAndStore } from "./src/BusinessLogics/fileAndFolderUpload/cloneRepoAndStore.js";
 
 const app = express();
 dotenv.config();
 const port =process.env.PORT||4000;
 
 
-// const url = 'mongodb://localhost:27017/negative';
-const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
+const url = 'mongodb://localhost:27017/negative';
+// const url = process.env.MONGO_URL||'mongodb://localhost:27017/negative';
 
 app.use(cors({
   origin: process.env.ORIGIN, // Allow only your frontend origin
@@ -71,6 +74,9 @@ app.get('/Verify_email/:id',userIsVerify);
 //Login System
 app.post('/Logindata',userFind);
 
+// Get User Data
+app.get('/getUserData/:id',verifyUser,getUserData);
+
 // Cloud System
 app.get('/getMainCloudTable/:id',verifyUser,getMainCloudTable);
 // app.post('/createFolder',verifyUser);
@@ -84,9 +90,10 @@ app.post('/DownloadFile/:id', verifyUser, downloadFiles);
 app.post('/ShareFile/:id', verifyUser, ShareFiles);
 app.get('/ShareZipFile', downloadPage);
 app.get('/DownloadZipFile', downloadZipFiles);
+// Create Folder
+app.post('/createFolder/:id', verifyUser, upload.single('file'), createFolder);
 
-
-app.post('/gitCofig',verifyUser);
+app.post('/GitClone/:id', verifyUser, cloneRepoAndStore);
 
 app.listen(port, () => {
   const url = `http://localhost:${port}/`;
